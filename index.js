@@ -22,6 +22,8 @@ for (var i = 0; i < shoppingList.length; i++) {
   console.log(shoppingList[i]);
 }
 
+
+
 // Позначаємо продукт як куплені
 function markAsBought(productName) {
   const item = shoppingList.find(item => item.name.toLowerCase() === productName.toLowerCase());
@@ -49,6 +51,8 @@ markAsBought('Яйця'); // Позначаємо яйця як куплені
 // displayShoppingList(shoppingList);
 // markAsBought('Молоко');
 
+
+
 // Видаляємо продукт
 function removeProduct(list, productName) {
   const newList = list.filter(item => item.name.toLowerCase() !== productName.toLowerCase());
@@ -65,6 +69,7 @@ function removeProduct(list, productName) {
 // displayShoppingList(removeProduct(shoppingList, 'Сир'));
 
 // displayShoppingList(removeProduct(shoppingList, 'Яйця'));
+
 
 // Додаємо продукт
 function addOrUpdateProduct(list, name, quantity, pricePerUnit) {
