@@ -23,7 +23,6 @@ for (var i = 0; i < shoppingList.length; i++) {
 }
 
 
-
 // Позначаємо продукт як куплені
 function markAsBought(productName) {
   const item = shoppingList.find(item => item.name.toLowerCase() === productName.toLowerCase());
@@ -48,9 +47,8 @@ markAsBought('Яйця'); // Позначаємо яйця як куплені
 // displayShoppingList(shoppingList);
 // markAsBought('Морозиво');
 
-// displayShoppingList(shoppingList);
-// markAsBought('Молоко');
-
+displayShoppingList(shoppingList);
+markAsBought('Молоко');
 
 
 // Видаляємо продукт
@@ -68,7 +66,7 @@ function removeProduct(list, productName) {
 
 // displayShoppingList(removeProduct(shoppingList, 'Сир'));
 
-// displayShoppingList(removeProduct(shoppingList, 'Яйця'));
+displayShoppingList(removeProduct(shoppingList, 'Яйця'));
 
 
 // Додаємо продукт
@@ -93,4 +91,58 @@ function addOrUpdateProduct(list, name, quantity, pricePerUnit) {
 
 // addOrUpdateProduct(shoppingList, 'Морозиво', 2, 12);
 // addOrUpdateProduct(shoppingList, 'Сир', 1, 100);
-// addOrUpdateProduct(shoppingList, 'Яйця', 5, 10);
+addOrUpdateProduct(shoppingList, 'Яйця', 5, 10);
+
+
+//Підрахунок суми всіх продуктів (враховуючи кількість кожного) в списку.
+
+function getTotalSum(list) {
+  return list.reduce((sum, item) => sum + item.total, 0);
+}
+
+console.log(`Загальна сума всіх продуктів: ${getTotalSum(shoppingList)} грн`);
+
+
+//Підрахунок суми всіх (не) придбаних продуктів.
+
+function getTotalBoughtSum(list) {
+  return list.reduce((sum, item) => sum + (item.isBought ? item.total : 0), 0);
+}
+
+console.log(`Загальна сума всіх придбаних продуктів: ${getTotalBoughtSum(shoppingList)} грн`);
+
+
+//Підрахунок суми всіх (не) придбаних продуктів.
+
+function getTotalNotBoughtSum(list) {
+  return list.reduce((sum, item) => sum + (item.isBought ? 0 : item.total), 0);
+}
+
+console.log(`Загальна сума всіх непридбаних продуктів: ${getTotalNotBoughtSum(shoppingList)} грн`);
+
+
+//Показання продуктів в залежності від суми, (від більшого до меншого / від меншого до більшого, в залежності від параметра функції, який вона приймає)
+
+function sortProductsBySum(list, order) {
+  return list.sort((a, b) => {
+    const sumA = a.isBought ? 0 : a.total;
+    const sumB = b.isBought ? 0 : b.total;
+    return order === 'desc' ? sumB - sumA : sumA - sumB;
+  });
+}
+
+const sortedList = sortProductsBySum(shoppingList, 'desc');
+console.log('Список продуктів в залежності від суми (від більшого до меншого):');
+sortedList.forEach(item => {
+  console.log(
+    `${item.name} — ${item.quantity} шт. × ${item.pricePerUnit} грн = ${item.total} грн — ${item.isBought ? '✅ Куплено' : '❌ Не куплено'}`
+  );
+});
+
+const sortedList2 = sortProductsBySum(shoppingList, 'asc');
+console.log('Список продуктів в залежності від суми (від меншого до більшого):');
+sortedList2.forEach(item => {
+  console.log(
+    `${item.name} — ${item.quantity} шт. × ${item.pricePerUnit} грн = ${item.total} грн — ${item.isBought ? '✅ Куплено' : '❌ Не куплено'}`
+  );
+});
